@@ -1,12 +1,19 @@
 require("dotenv").config();
 const port = process.env.APP_PORT ?? process.env.PORT;
 
+const dayjs = require("dayjs");
+const utc = require("dayjs/plugin/utc");
+const timezone = require("dayjs/plugin/timezone");
+
 const express = require("express");
 const hbs = require("hbs");
 const app = express();
 const generalRouters = require("./routers/generalRouters");
 const postsRouter = require("./routers/postsRouter");
 
+dayjs.extended(utc);
+dayjs.extended(timezone);
+dayjs.tz.setDefault("Asia/Bangkok");
 
 //ส่งข้อมูลมาทาง body HTML
 app.use(express.urlencoded({extended: true}));

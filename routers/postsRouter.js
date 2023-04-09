@@ -59,7 +59,7 @@ async function getPostAndComments(postId) {
         */
     const onePost_tmp = await db.select("*").from("post").where("id", +postId);
     onePost = onePost_tmp[0];
-    onePost.dataTimeText = dayjs(onePost.createdDate).format(
+    onePost.dataTimeText = dayjs.tz(onePost.createdDate).format(
       "DD MMM YYYY - HH:mm"
     );
     //Get post comments
@@ -73,7 +73,7 @@ async function getPostAndComments(postId) {
       .where("postId", +postId)
       .orderBy("id", "asc");
     postComments = postComments.map((comment) => {
-      const dataTimeText = dayjs(comment.createdDate).format(
+      const dataTimeText = dayjs.tz(comment.createdDate).format(
         "DD MMM YYYY - HH:mm"
       );
       return { ...comment, dataTimeText };
